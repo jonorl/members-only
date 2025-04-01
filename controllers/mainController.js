@@ -2,71 +2,46 @@
 
 const db = require("../db/queries");
 
-async function getCategories(req, res) {
-  const categories = await db.getAllCategories();
-  const errorMessage = req.query.error || false;
-  res.render("categories", {
-    title: "Categories",
-    categories: categories,
-    messages: errorMessage,
-  });
-}
+// Passport and hashing libs for user authentication
+const bcrypt = require("bcryptjs");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
-async function postCategories(req, res) {
-  const { name } = req.body;
-  await db.insertCategory(name);
-  res.redirect("/");
-}
+// Optional, load express to format dates
+const moment = require('moment');
 
-async function getConsoles(req, res) {
-  const consoles = await db.getAllConsoles();
-  const categories = await db.getAllCategories();
-  res.render("consoles", {
-    title: "Consoles",
-    consoles: consoles,
-    categories: categories,
-  });
-}
+// Passport config
 
-async function postConsoles(req, res) {
-  const { name } = req.body;
-  const { releaseYr } = req.body;
-  const { stock } = req.body;
-  const { categoryId } = req.body;
-  await db.insertConsole(name, releaseYr, stock, categoryId);
-  res.redirect("/consoles");
-}
+passport.use(
+  new LocalStrategy(async (email, password, done) => {
+    try {
+      const { rows } = await pool.query(
+        "SELECT * FROM users WHERE email = $1",
+        [email]
+      );
+      const user = rows[0];
 
-async function delConsoles(req, res) {
-  const { id } = req.params;
-  await db.delConsole(id);
-  res.redirect("/consoles");
-}
-
-async function delCategory(req, res) {
-  const { id } = req.params;
-
-  try {
-    const itemCount = await db.checkItemsInCategory(id);
-
-    if (itemCount > 0) {
-      // Items exist in this category, don't delete
-      return res.redirect('/categories?error=Cannot delete category. Items are associated with it.');
+      if (!user) {
+        return done(null, false, { message: "Incorrect email" });
+      }
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+        // passwords do not match!
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err);
     }
+  })
+);
 
-    await db.delCategory(id);
-
-    res.redirect("/");
-  } catch (err) {
-    console.log("Error deleting category:", err);
-  }
+async function getIndex(req, res) {
+      const board = await db.getAllUsernames();
+      const modifiedBoard = board.map(obj => ({ ...obj, formattedDate: moment(obj.message_created_at).format("DD/MM/YY"), formattedTime: moment(obj.message_created_at).format("h:mm:ssa"),}));
+      res.render("../views/index", { title: "Mini Messageboard", board: modifiedBoard });
 }
 
 module.exports = {
-  getCategories,
-  getConsoles,
-  postCategories,
-  postConsoles,
-  delConsoles,
-  delCategory,
+  getIndex,
 };

@@ -1,2 +1,2 @@
-# Inventory Application
-Inventory Applications for The Odin Project
+# Members Only
+Members Only for The Odin Project

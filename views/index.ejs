@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1 class="title"><%=title%></h1>
+    <a href="/new" class="go-to-new">New message</a>
+    <div class="cards-container">
+      <% board.forEach((message) => { %>
+      <div class="card">
+        <h2 class="user"><%=message.email%></h2>
+        <h3 class="date"><%=message.formattedDate%></h3>
+        <h4 class="time"><%=message.formattedTime%></h4>
+        <p class="message"><%=message.text%></p>
+        <!-- Link to details with params/queries  -->
+        <a href="/message?user=<%= encodeURIComponent(message.email) %>&date=<%= encodeURIComponent(message.formattedDate) %>&time=<%= encodeURIComponent(message.formattedTime) %>&message=<%= encodeURIComponent(message.text) %>" class="view-message-details">View message</a>
+      </div>
+      <%}) %>
+    </div>
+  </body>
+</html>
