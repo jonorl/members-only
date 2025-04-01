@@ -1,0 +1,83 @@
+body {
+  background-color: black;
+  color: aliceblue;
+  display: grid;
+  justify-items: center;
+}
+
+.cards-container {
+  display: grid;
+  row-gap: 3vh;
+}
+
+.card {
+  display: grid;
+  border: 2px solid aliceblue;
+  padding: 10px;
+  max-height: fit-content;
+}
+
+.card > * {
+  margin: 0;
+  width: 33vw;
+  display: flex;
+}
+
+.user {
+  justify-content: center;
+}
+
+.date,
+.time {
+  justify-content: end;
+  font-size: 12px;
+}
+
+.message {
+  margin: 25px;
+  justify-self: baseline;
+}
+
+form {
+  display: grid;
+}
+
+.submit {
+  margin-top: 3vh;
+}
+
+a {
+  color: hsl(210, 100%, 55%); /* Adjust these values */
+}
+
+a:visited {
+  color: hsl(285, 75%, 40%); /* Adjust these values for visited links */
+}
+
+a:hover {
+  color: hsl(210, 100%, 70%); /* Lighter on hover */
+}
+
+a:active {
+  color: hsl(210, 100%, 40%); /* Darker on click */
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+tr > *:first-child {
+  text-align: left;
+}
+
+th,
+td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.alert-danger {
+  color: red;
+}

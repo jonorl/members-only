@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1 class="title"><%=title%></h1>
+    <a href="/">Categories</a>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Release Year</th>
+          <th>Stock</th>
+          <th>Category ID</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% consoles.forEach(console => { %>
+        <tr>
+          <td><%= console.name %></td>
+          <td><%= console.release_yr %></td>
+          <td><%= console.stock %></td>
+          <td><%= console.category_id %></td>
+          <td>  <a href="/delConsole/<%= console.id %>">
+            <i id="<%= console.id %>" class="fas fa-trash-alt"></i>
+          </a></td> 
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <form method="POST" action="/addConsole" class="form">
+      <label for="name">Name:</label><br />
+      <input type="text" id="name" name="name" /><br />
+      <label for="releaseYr">Release Year:</label><br />
+      <input
+        type="number"
+        id="releaseYr"
+        name="releaseYr"
+        min="1950"
+        max="2025"
+        step="1"
+      />
+      <label for="stock">Stock:</label><br />
+      <input type="number" id="stock" name="stock" /><br />
+      <!-- <label for="categoryId">Category:</label><br /> -->
+      <!-- <input type="number" id="categoryId" min="0" name="categoryId" /><br /> -->
+      <label for="categoryId">Category:</label>
+      <select id="categoryId" name="categoryId" required>
+        <% categories.forEach(category => { %>
+          <option value="<%= category.id %>"><%= category.name %></option>
+        <% }); %>
+      </select><br><br>
+      <button class="submit" id="submit">Submit</button>
+    </form>
+  </body>
+</html>
