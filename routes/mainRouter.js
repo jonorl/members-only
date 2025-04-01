@@ -7,6 +7,14 @@ const mainRouter = Router();
 
 mainRouter.get("/", mainController.getIndex);
 
+mainRouter.get("/login", mainController.getLogin);
+
+mainRouter.get("/sign-up", mainController.getSignUp);
+
+mainRouter.post("/sign-up", mainController.postSignUp);
+
+mainRouter.post("/login", mainController.postLogin);
+
 // Always export back to app.js at the end
 
 module.exports = mainRouter;
