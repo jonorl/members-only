@@ -11,6 +11,8 @@ mainRouter.get("/login", mainController.getLogin);
 
 mainRouter.get("/sign-up", mainController.getSignUp);
 
+mainRouter.get("/new-message", mainController.getNewMessage)
+
 mainRouter.post("/sign-up", mainController.postSignUp);
 
 mainRouter.post("/login", mainController.postLogin);

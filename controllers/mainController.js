@@ -92,10 +92,15 @@ async function postLogin(req, res, next) {
   })(req, res, next);  
 }
 
+async function getNewMessage(req, res) {
+  res.render("../views/new-message", {title: "New Message"});
+}
+
 module.exports = {
   getIndex,
   getLogin,
   getSignUp,
   postSignUp,
   postLogin,
+  getNewMessage,
 };
