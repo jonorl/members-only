@@ -3,6 +3,7 @@
 const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const { validationResult } = require("express-validator");
 
 // Optional, load express to format dates
 const moment = require("moment");
@@ -22,7 +23,7 @@ async function getIndex(req, res) {
 }
 
 async function getLogin(req, res) {
-  res.render("../views/login", { user: req.user});
+  res.render("../views/login", { user: req.user });
 }
 
 async function getSignUp(req, res) {
@@ -30,7 +31,7 @@ async function getSignUp(req, res) {
 }
 
 async function getNewMessage(req, res) {
-  console.log(req.user)
+  console.log(req.user);
   res.render("../views/new-message", {
     title: "New Message",
     user: req.user,
@@ -44,9 +45,21 @@ async function getLogout(req, res, next) {
     }
     res.redirect("/");
   });
-};
+}
 
 async function postSignUp(req, res, next) {
+  // Handle validation errors
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    // Return to the sign-up page with error messages
+    return res.render("../views/sign-up", {
+      errors: errors.array(),
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+    });
+  }
+
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = await db.insertNewUser(
@@ -77,11 +90,7 @@ async function postLogin(req, res, next) {
 }
 
 async function postNewMessage(req, res) {
-  await db.insertMessage(
-    req.user.email,
-    req.body.title,
-    req.body.message
-  );
+  await db.insertMessage(req.user.email, req.body.title, req.body.message);
   res.redirect("/");
 }
 
