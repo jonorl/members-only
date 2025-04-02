@@ -19,9 +19,11 @@ async function getAllUsernames() {
   return rows;
 }
 
-async function insertMessage() {
-  const { rows } = await pool.query("SELECT * FROM board");
-  return rows;
+async function insertMessage(email, title, text) {
+  await pool.query(
+    "insert into board (email, title, text) values ($1, $2, $3)",
+    [email, title, text]
+  );
 }
 
 async function insertNewUser(firstName, lastName, email, password) {

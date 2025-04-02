@@ -17,6 +17,8 @@ mainRouter.post("/sign-up", mainController.postSignUp);
 
 mainRouter.post("/login", mainController.postLogin);
 
+mainRouter.post("/new-message", mainController.postNewMessage)
+
 // Always export back to app.js at the end
 
 module.exports = mainRouter;
