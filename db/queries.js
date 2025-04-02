@@ -8,9 +8,7 @@ async function serialise(email) {
 }
 
 async function deserialise(id) {
-  const rows = await pool.query("SELECT * FROM users WHERE user_id = $1", [
-    id,
-  ]);
+  const rows = await pool.query("SELECT * FROM users WHERE user_id = $1", [id]);
   return rows;
 }
 
@@ -20,17 +18,18 @@ async function getAllUsernames() {
 }
 
 async function insertMessage(email, title, text) {
-  await pool.query(
-    "insert into board (email, title, text) values ($1, $2, $3)",
-    [email, title, text]
+  await db.query(
+    "INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *",
+    [firstName, lastName, email, hashedPassword]
   );
 }
 
 async function insertNewUser(firstName, lastName, email, password) {
-  await pool.query(
-    "insert into users (first_name, last_name, email, password_hash) values ($1, $2, $3, $4)",
+  const result = await pool.query(
+    "insert into users (first_name, last_name, email, password_hash) values ($1, $2, $3, $4) RETURNING *",
     [firstName, lastName, email, password]
   );
+  return result.rows[0];
 }
 
 module.exports = {
