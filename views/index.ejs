@@ -9,21 +9,21 @@
     <h1 class="title"><%=title%></h1>
 
     <% if (user) { %>
-      <p>Welcome, <%= user.email %>!</p>
-      <a href="/logout">Logout</a>
-    <% } else { %>
-      <p>Welcome, guest!</p>
-      <a href="/login">Login</a> | <a href="/sign-up">Sign Up</a>
-    <% } %>
-
-    <a href="/login" class="login">Login</a>
-    <a href="/sign-up">Sign Up</a>
+    <p>Welcome, <%= user.email %>!</p>
+    <a href="/logout">Logout</a>
     <a href="/new-message">Leave a message</a>
+    <% } else { %>
+    <p>Welcome, guest!</p>
+    <a href="/login">Login</a>
+    <a href="/sign-up">Sign Up</a>
+    <% } %>
 
     <div class="cards-container">
       <% board.forEach((message) => { %>
       <div class="card">
+        <% if (user) { %>
         <h2 class="user">From: <%=message.email%></h2>
+        <% } %>
         <h3 class="date"><%=message.formattedDate%></h3>
         <h4 class="time"><%=message.formattedTime%></h4>
         <h3 class="message"><%=message.title%></h3>

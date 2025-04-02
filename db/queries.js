@@ -18,9 +18,9 @@ async function getAllUsernames() {
 }
 
 async function insertMessage(email, title, text) {
-  await db.query(
-    "INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *",
-    [firstName, lastName, email, hashedPassword]
+  await pool.query(
+    "INSERT INTO board (email, title, text) VALUES ($1, $2, $3)",
+    [email, title, text]
   );
 }
 
