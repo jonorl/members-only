@@ -100,7 +100,6 @@ async function postLogin(req, res, next) {
 }
 
 async function postNewMessage(req, res) {
-  console.log(req.session.passport.user.email)
   await db.insertMessage(
     req.session.passport.user.email,
     req.body.title,
