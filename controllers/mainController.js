@@ -69,6 +69,7 @@ async function postSignUp(req, res, next) {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
+      user: req.user,
     });
   }
 
