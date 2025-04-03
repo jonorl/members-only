@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <title><%= title %></title>
   </head>
   <body>
@@ -28,9 +32,15 @@
         <h2 class="user">From: <%=message.email%></h2>
         <h3 class="date"><%=message.formattedDate%></h3>
         <h4 class="time"><%=message.formattedTime%></h4>
+        <% if (user.role === "admin") { %>
+        <a class="delete" href="/delete/<%= message.message_id %>">
+          <i id="<%= message.message_id %>" class="fas fa-trash-alt"></i>
+        </a>
+        <% } %>
         <% } %> <% } %>
         <h3 class="message"><%=message.title%></h3>
         <p class="message"><%=message.text%></p>
+
       </div>
       <% }) %>
     </div>

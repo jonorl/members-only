@@ -23,15 +23,22 @@ body {
   display: flex;
 }
 
+.delete {
+  display: flex;
+  justify-content: end;
+}
+
 .user {
   justify-content: center;
 }
 
 .date,
-.time {
+.time{
   justify-content: end;
   font-size: 12px;
 }
+
+
 
 .message {
   margin: 25px;

@@ -19,6 +19,8 @@ mainRouter.get("/logout", mainController.getLogout)
 
 mainRouter.get("/profile", mainController.getProfile)
 
+mainRouter.get("/delete/:messageId", mainController.getDelete)
+
 mainRouter.post("/sign-up", [...validateUser, ...validateEmail], mainController.postSignUp);
 
 mainRouter.post("/login", mainController.postLogin);

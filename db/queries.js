@@ -42,6 +42,11 @@ const update = await pool.query("UPDATE users SET role = $2 WHERE email = $1", [
 return update;
 }
 
+async function deleteMessage(id) {
+  const del = await pool.query("DELETE FROM board WHERE message_id = $1", [id]);
+  return del
+}
+
 module.exports = {
   serialise,
   deserialise,
@@ -50,4 +55,5 @@ module.exports = {
   insertNewUser,
   checkExistingEmail,
   updateRole,
+  deleteMessage,
 };

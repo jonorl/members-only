@@ -94,6 +94,12 @@ async function getProfile(req, res) {
   res.render("../views/profile", { user: req.user });
 }
 
+async function getDelete(req, res) {
+  console.log(req.params.messageId)
+  await db.deleteMessage(req.params.messageId)
+  res.redirect("/")
+}
+
 async function postLogin(req, res, next) {
   passport.authenticate("local", {
     successRedirect: "/login",
@@ -118,6 +124,7 @@ module.exports = {
   getLogout,
   getNewMessage,
   getProfile,
+  getDelete,
   postSignUp,
   postLogin,
   postNewMessage,
