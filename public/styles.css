@@ -5,6 +5,27 @@ body {
   justify-items: center;
 }
 
+header {
+  display: flex;
+  justify-content: space-between; /* Distributes space between items */
+  align-items: center; 
+  background: black; 
+  color: aliceblue;
+  border-bottom: 1px solid #ddd; 
+  width: 100vw;
+}
+
+header a {
+  text-decoration: none; 
+  font-weight: 500; 
+  padding-left: 5vw;
+  padding-right: 5vw; 
+}
+
+header a:hover {
+  color: #007bff; 
+}
+
 .cards-container {
   display: grid;
   row-gap: 3vh;
@@ -87,4 +108,8 @@ td {
 
 .alert-danger {
   color: red;
+}
+
+button {
+  margin-top: 3vh;
 }

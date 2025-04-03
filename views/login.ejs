@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="styles.css" />
-  <title>Log In</title>
-</head>
-<body>
-  <% if (locals.user) {%>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Log In</title>
+  </head>
+  <header>
+    <a href="/">Home</a>
+
+    <% if (user) { %>
+    <a href="/new-message">Leave a message</a>
+
+    <a href="/profile">Profile</a>
+
+    <a href="/logout">Logout</a>
+
+    <% } else { %>
+
+    <a href="/login">Login</a>
+
+    <a href="/sign-up">Sign Up</a>
+
+    <% } %>
+  </header>
+  <body>
+    <% if (locals.user) {%>
     <h1>WELCOME BACK <%= user.email %></h1>
-    <a href="/log-out">LOG OUT</a>
-  <% } else { %>
+    <% } else { %>
     <h1>Please log in</h1>
     <form action="/login" method="POST">
       <label for="username">Username</label>
@@ -19,6 +36,6 @@
       <input id="password" name="password" type="password" />
       <button type="submit">Log In</button>
     </form>
-  <%}%>
-</body>
+    <%}%>
+  </body>
 </html>

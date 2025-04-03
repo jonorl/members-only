@@ -17,7 +17,7 @@ async function getIndex(req, res) {
     formattedTime: moment(obj.message_created_at).format("h:mm:ssa"),
   }));
   res.render("../views/index", {
-    title: "Mini Messageboard",
+    title: "Members Only",
     board: modifiedBoard,
     user: req.user,
   });
@@ -28,7 +28,7 @@ async function getLogin(req, res) {
 }
 
 async function getSignUp(req, res) {
-  res.render("../views/sign-up");
+  res.render("../views/sign-up", { user: req.user });
 }
 
 async function getNewMessage(req, res) {
@@ -45,6 +45,10 @@ async function getLogout(req, res, next) {
     }
     res.redirect("/");
   });
+}
+
+async function getProfile(req, res) {
+  res.render("../views/profile", { user: req.user });
 }
 
 async function postSignUp(req, res, next) {
@@ -88,10 +92,6 @@ async function postSignUp(req, res, next) {
     console.error(error);
     next(error);
   }
-}
-
-async function getProfile(req, res) {
-  res.render("../views/profile", { user: req.user });
 }
 
 async function getDelete(req, res) {

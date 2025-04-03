@@ -6,8 +6,28 @@
     <link rel="stylesheet" href="styles.css" />
     <title>Log In</title>
   </head>
+  <header>
+    <a href="/">Home</a>
+
+    <% if (user) { %>
+    <a href="/new-message">Leave a message</a>
+
+    <a href="/profile">Profile</a>
+
+    <a href="/logout">Logout</a>
+
+    <% } else { %>
+
+    <a href="/login">Login</a>
+
+    <a href="/sign-up">Sign Up</a>
+
+    <% } %>
+  </header>
   <body>
     <% if (user) { %> <% if (user.role === "user") { %>
+    <p><%= user.email %>, right now your type of role is: <%= user.role %></p>
+    <p>You are able to post messages, but not see its details or delete them</p>
     <p>Please validate your user, type member or admin</p>
     <form action="/profile" method="POST">
       <label for="membership">Membership keyword</label>
@@ -21,9 +41,7 @@
     </form>
     <% } else { %>
     <p>You are logged in as a(n) <%= user.role %></p>
-    <% } %>
-    <a href="/log-out">LOG OUT</a>
-    <% } else { %>
+    <% } %> <% } else { %>
     <h1>Please log in</h1>
     <form action="/login" method="POST">
       <label for="username">Username</label>
