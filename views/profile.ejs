@@ -41,7 +41,8 @@
     </form>
     <% } else { %>
     <p>You are logged in as a(n) <%= user.role %></p>
-    <% } %> <% } else { %>
+    <% } %> 
+    <p>Total visits: <%= user.visits %></p><% } else { %>
     <h1>Please log in</h1>
     <form action="/login" method="POST">
       <label for="username">Username</label>

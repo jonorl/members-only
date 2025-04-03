@@ -35,6 +35,7 @@ passport.use(
         // passwords do not match!
         return done(null, false, { message: "Incorrect password" });
       }
+      db.incrementVisits(user.user_id)
       return done(null, user);
     } catch (err) {
       return done(err);

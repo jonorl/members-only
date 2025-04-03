@@ -47,6 +47,11 @@ async function deleteMessage(id) {
   return del
 }
 
+async function incrementVisits(id) {
+  const increment = await pool.query("UPDATE users SET visits = visits + 1 WHERE user_id = $1", [id]);
+  return increment;
+} 
+
 module.exports = {
   serialise,
   deserialise,
@@ -56,4 +61,5 @@ module.exports = {
   checkExistingEmail,
   updateRole,
   deleteMessage,
+  incrementVisits,
 };
