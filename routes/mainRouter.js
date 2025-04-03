@@ -19,7 +19,7 @@ mainRouter.get("/logout", mainController.getLogout)
 
 mainRouter.get("/profile", mainController.getProfile)
 
-mainRouter.post("/sign-up", validateEmail, validateUser, mainController.postSignUp);
+mainRouter.post("/sign-up", [...validateUser, ...validateEmail], mainController.postSignUp);
 
 mainRouter.post("/login", mainController.postLogin);
 

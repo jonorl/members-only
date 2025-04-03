@@ -3,9 +3,12 @@ const db = require("../db/queries");
 
 const validateEmail = [
   body("email")
+    .isEmail()
+    .withMessage("Email must be a valid email address")
+    .bail()
     .custom(async (value) => {
       const user = await db.checkExistingEmail(value);
-      if (user) {
+      if (user.rows.length > 0) {
         throw new Error("Email address already in use.");
       }
       return true;

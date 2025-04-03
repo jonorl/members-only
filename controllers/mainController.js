@@ -32,7 +32,6 @@ async function getSignUp(req, res) {
 }
 
 async function getNewMessage(req, res) {
-  console.log(req.user);
   res.render("../views/new-message", {
     title: "New Message",
     user: req.user,
@@ -52,9 +51,17 @@ async function postSignUp(req, res, next) {
   // Handle validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    // Return to the sign-up page with error messages
+
+    const uniqueErrors = {};
+    errors.array().forEach((error) => {
+      if (!uniqueErrors[error.path]) {
+        uniqueErrors[error.path] = error;
+      }
+      // Return to the sign-up page with error messages
+    });
+
     return res.render("../views/sign-up", {
-      errors: errors.array(),
+      errors: Object.values(uniqueErrors),
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -84,8 +91,7 @@ async function postSignUp(req, res, next) {
 }
 
 async function getProfile(req, res) {
-  console.log(req.user.role)
-    res.render("../views/profile", {user: req.user});
+  res.render("../views/profile", { user: req.user });
 }
 
 async function postLogin(req, res, next) {
@@ -100,7 +106,7 @@ async function postNewMessage(req, res) {
   res.redirect("/");
 }
 
-async function postProfile (req,res) {
+async function postProfile(req, res) {
   await db.updateRole(req.user.email, req.body.membership);
   res.redirect("/profile");
 }
