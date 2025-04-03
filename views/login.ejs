@@ -26,7 +26,7 @@
   </header>
   <body>
     <% if (locals.user) {%>
-    <h1>WELCOME BACK <%= user.email %></h1>
+    <h1>WELCOME BACK <%= user.first_name %></h1>
     <% } else { %>
     <h1>Please log in</h1>
     <form action="/login" method="POST">
