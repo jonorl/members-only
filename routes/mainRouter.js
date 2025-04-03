@@ -3,6 +3,7 @@
 const { Router } = require("express");
 const mainController = require("../controllers/mainController");
 const { validateUser } = require("../controllers/formValidation");
+const { validateEmail } = require("../controllers/emailDuplicateValidation");
 
 const mainRouter = Router();
 
@@ -16,11 +17,15 @@ mainRouter.get("/new-message", mainController.getNewMessage)
 
 mainRouter.get("/logout", mainController.getLogout)
 
-mainRouter.post("/sign-up", validateUser, mainController.postSignUp);
+mainRouter.get("/profile", mainController.getProfile)
+
+mainRouter.post("/sign-up", validateEmail, validateUser, mainController.postSignUp);
 
 mainRouter.post("/login", mainController.postLogin);
 
 mainRouter.post("/new-message", mainController.postNewMessage)
+
+mainRouter.post("/profile", mainController.postProfile)
 
 // Always export back to app.js at the end
 

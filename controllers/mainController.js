@@ -7,6 +7,7 @@ const { validationResult } = require("express-validator");
 
 // Optional, load express to format dates
 const moment = require("moment");
+const { localsName } = require("ejs");
 
 async function getIndex(req, res) {
   const board = await db.getAllUsernames();
@@ -82,6 +83,11 @@ async function postSignUp(req, res, next) {
   }
 }
 
+async function getProfile(req, res) {
+  console.log(req.user.role)
+    res.render("../views/profile", {user: req.user});
+}
+
 async function postLogin(req, res, next) {
   passport.authenticate("local", {
     successRedirect: "/login",
@@ -94,13 +100,20 @@ async function postNewMessage(req, res) {
   res.redirect("/");
 }
 
+async function postProfile (req,res) {
+  await db.updateRole(req.user.email, req.body.membership);
+  res.redirect("/profile");
+}
+
 module.exports = {
   getIndex,
   getLogin,
   getSignUp,
   getLogout,
   getNewMessage,
+  getProfile,
   postSignUp,
   postLogin,
   postNewMessage,
+  postProfile,
 };

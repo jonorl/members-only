@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Log In</title>
+  </head>
+  <body>
+    <% if (user) { %> <% if (user.role === "user") { %>
+    <p>Please validate your user, type member or admin</p>
+    <form action="/profile" method="POST">
+      <label for="membership">Membership keyword</label>
+      <input
+        id="membership"
+        name="membership"
+        placeholder="keyword"
+        type="text"
+      />
+      <button type="submit">Submit Membership</button>
+    </form>
+    <% } else { %>
+    <p>You are logged in as a(n) <%= user.role %></p>
+    <% } %>
+    <a href="/log-out">LOG OUT</a>
+    <% } else { %>
+    <h1>Please log in</h1>
+    <form action="/login" method="POST">
+      <label for="username">Username</label>
+      <input id="username" name="username" placeholder="username" type="text" />
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" />
+      <button type="submit">Log In</button>
+    </form>
+    <% } %>
+  </body>
+</html>

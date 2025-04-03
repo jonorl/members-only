@@ -32,10 +32,22 @@ async function insertNewUser(firstName, lastName, email, password) {
   return result.rows[0];
 }
 
+async function checkExistingEmail(email) {
+  const rows = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+  return rows;
+}
+
+async function updateRole (email, role) {
+const update = await pool.query("UPDATE users SET role = $2 WHERE email = $1", [email, role]);
+return update;
+}
+
 module.exports = {
   serialise,
   deserialise,
   getAllUsernames,
   insertMessage,
   insertNewUser,
+  checkExistingEmail,
+  updateRole,
 };
