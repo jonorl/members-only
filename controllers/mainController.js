@@ -55,7 +55,6 @@ async function postSignUp(req, res, next) {
   // Handle validation errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-
     const uniqueErrors = {};
     errors.array().forEach((error) => {
       if (!uniqueErrors[error.path]) {
@@ -96,17 +95,33 @@ async function postSignUp(req, res, next) {
 }
 
 async function getDelete(req, res) {
-  console.log(req.params.messageId)
-  await db.deleteMessage(req.params.messageId)
-  res.redirect("/")
+  console.log(req.params.messageId);
+  await db.deleteMessage(req.params.messageId);
+  res.redirect("/");
 }
 
 async function postLogin(req, res, next) {
-  passport.authenticate("local", {
-    successRedirect: "/login",
-    failureRedirect: "/sign-up",
+  passport.authenticate("local", async (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.redirect("/sign-up");
+    }
+
+    req.logIn(user, async (err) => {
+      if (err) {
+        return next(err);
+      }
+
+      // Update created_at after successful login
+      await db.updateCreatedAt(req.body.username);
+
+      return res.redirect("/login");
+    });
   })(req, res, next);
 }
+
 
 async function postNewMessage(req, res) {
   await db.insertMessage(req.user.email, req.body.title, req.body.message);

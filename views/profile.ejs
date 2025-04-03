@@ -42,7 +42,10 @@
     <% } else { %>
     <p>You are logged in as a(n) <%= user.role %></p>
     <% } %> 
-    <p>Total visits: <%= user.visits %></p><% } else { %>
+    <p>Total visits: <%= user.visits %></p>
+    <p>Last visit: <%= user.updated_at %></p>
+    <p>Account created: <%= user.created_at %></p>
+    <% } else { %>
     <h1>Please log in</h1>
     <form action="/login" method="POST">
       <label for="username">Username</label>

@@ -52,6 +52,14 @@ async function incrementVisits(id) {
   return increment;
 } 
 
+async function updateCreatedAt(email) {
+  const result = await pool.query(
+    "UPDATE users SET updated_at = CURRENT_TIMESTAMP WHERE email = $1",
+    [email]
+  );
+  return result;
+}
+
 module.exports = {
   serialise,
   deserialise,
@@ -62,4 +70,5 @@ module.exports = {
   updateRole,
   deleteMessage,
   incrementVisits,
+  updateCreatedAt,
 };
