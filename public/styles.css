@@ -106,8 +106,9 @@ td {
   padding-right: 10px;
 }
 
-.alert-danger {
+.alert-danger, li {
   color: red;
+  list-style-type: none;
 }
 
 button {

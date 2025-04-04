@@ -51,6 +51,12 @@ async function getProfile(req, res) {
   res.render("../views/profile", { user: req.user });
 }
 
+async function getDelete(req, res) {
+  console.log(req.params.messageId);
+  await db.deleteMessage(req.params.messageId);
+  res.redirect("/");
+}
+
 async function postSignUp(req, res, next) {
   // Handle validation errors
   const errors = validationResult(req);
@@ -94,12 +100,6 @@ async function postSignUp(req, res, next) {
   }
 }
 
-async function getDelete(req, res) {
-  console.log(req.params.messageId);
-  await db.deleteMessage(req.params.messageId);
-  res.redirect("/");
-}
-
 async function postLogin(req, res, next) {
   passport.authenticate("local", async (err, user, info) => {
     if (err) {
@@ -122,14 +122,26 @@ async function postLogin(req, res, next) {
   })(req, res, next);
 }
 
-
 async function postNewMessage(req, res) {
   await db.insertMessage(req.user.email, req.body.title, req.body.message);
   res.redirect("/");
 }
 
 async function postProfile(req, res) {
-  await db.updateRole(req.user.email, req.body.membership);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const uniqueErrors = {};
+    errors.array().forEach((error) => {
+      if (!uniqueErrors[error.path]) {
+        uniqueErrors[error.path] = error;
+      }
+    });
+    // Return to the profile page with error messages
+    return res.render("../views/profile", {
+      errors: Object.values(uniqueErrors),
+      user: req.user,
+    });
+  } else await db.updateRole(req.user.email, req.body.membership);
   res.redirect("/profile");
 }
 
